@@ -1,0 +1,20 @@
+# Compiled objects and libraries
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+atax_acc
+
+# Generated Make dependencies
+Makefile.dep
+
+# Generated benchmark logs/results
+OpenMP_assignment/results/
+
+# Operating-system files
+.DS_Store
