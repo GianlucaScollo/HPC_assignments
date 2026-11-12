@@ -6,7 +6,7 @@
 /* Include polybench common header. */
 #include <polybench.h>
 
-/* Include benchmark-specific header. */
+/* Include benchmark-specific header. */ 
 /* Default data type is double, default size is 4000. */
 #include "atax.h"
 
@@ -60,7 +60,7 @@ static void kernel_atax(int nx, int ny,
 {
   int i, j;
   
-  #pragma omp parallel
+  #pragma omp parallel private(i,j)
   {
     // Compute tmp = A * x in parallel
     // Each iteration processes an independent row of A
@@ -76,14 +76,35 @@ static void kernel_atax(int nx, int ny,
     
     // Compute y = A^T * tmp in parallel
     // Each iteration computes a distinct element of y
-    
+
+    // #pragma omp for
+    // for (j = 0; j < _PB_NY; j++)
+    // {
+    //   y[j] = 0;
+    //
+    //   for (i = 0; i < _PB_NX; i++)
+    //     y[j] += A[i][j] * tmp[i];
+    // }
+
+    /* PROBLEMA: nella versione sopra (commentata) il loop interno scorre i,
+       quindi A[i][j] viene letta per colonne (stride di NY elementi): quasi
+       ogni accesso causa un cache miss e la fase 2 è molto più lenta della 1.
+       SOLUZIONE: si mantiene l'accesso per righe (i esterno, j interno, stride 1)
+       e si parallelizza su i. Thread diversi aggiornerebbero gli stessi y[j],
+       quindi si usa una reduction sull'intero array y: ogni thread accumula
+       in una copia privata di y e alla fine OpenMP somma le copie in y. */
+
+    // y deve essere azzerato prima: la reduction somma i parziali al valore iniziale
     #pragma omp for
     for (j = 0; j < _PB_NY; j++)
-    {
       y[j] = 0;
-      
-      for (i = 0; i < _PB_NX; i++)
-        y[j] += A[i][j] * tmp[i];
+    // barriera implicita: y è azzerato prima dell'inizio della reduction
+
+    #pragma omp for reduction(+: y[0:_PB_NY])
+    for (i = 0; i < _PB_NX; i++)
+    {
+      for (int jj = 0; jj < _PB_NY; jj++)   // contatore locale -> privato per thread
+        y[jj] += A[i][jj] * tmp[i];
     }
   }
 }
