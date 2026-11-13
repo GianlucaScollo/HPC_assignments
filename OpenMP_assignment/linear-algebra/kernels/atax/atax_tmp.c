@@ -60,7 +60,7 @@ static void kernel_atax(int nx, int ny,
 {
   int i, j;
   
-  #pragma omp parallel
+  #pragma omp parallel private(i,j)
   {
     // Initialize the output vector y to zero
     
