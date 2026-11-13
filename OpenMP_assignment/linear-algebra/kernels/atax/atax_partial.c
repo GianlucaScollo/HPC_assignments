@@ -92,7 +92,7 @@ static void kernel_atax(int nx, int ny,
 
       // Compute tmp[i] as the dot product of row i of A and vector x
       for (int j = 0; j < _PB_NY; j++)
-        tmp[i] += A[i][j] * x[j];
+        tmp[i] += A[i][j] * x[j]; 
 
       // Accumulate the contribution of row i into the thread-private vector
       for (int j = 0; j < _PB_NY; j++)

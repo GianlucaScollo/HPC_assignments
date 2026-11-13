@@ -41,17 +41,9 @@ See [`OpenMP_assignment/README.md`](OpenMP_assignment/README.md) for setup instr
 
 ## Authors
 
-- **Name:** Gianluca Scollo
-- **UNIMORE ID:** 187575
-- **Email:** 333517@studenti.unimore.it
-
-- **Name:** 
-- **UNIMORE ID:** 
-- **Email:** 
-
-- **Name:** 
-- **UNIMORE ID:** 
-- **Email:** 
+- **Name:** Gianluca Scollo - *UNIMORE ID:* 187575 - *Email:* 333517@studenti.unimore.it
+- **Name:** Lorenzo Contri - *UNIMORE ID:* 222928 - *Email:* 394649@studenti.unimore.it
+- **Name:** Tchinda Ngoune Samory - *UNIMORE ID:* 255111 - *Email:* 396047@studenti.unimore.it 
 
 ## Reproducing results
 
