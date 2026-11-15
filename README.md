@@ -21,6 +21,8 @@ HPC_assignments/
 │   │           ├── atax_validation.c
 │   │           ├── atax_validation.h
 │   │           └── References/
+│   ├── presentation/
+│   │   └── ATAX_presentation.pptx
 │   ├── scripts/
 │   │   └── run_benchmarks.sh
 │   ├── utilities/
